@@ -1,5 +1,6 @@
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Alert, Image, Pressable, StyleSheet, Text, View } from 'react-native'
+import { Button } from '../components/button'
 
 export const Welcome = () => {
   const handlePress = () => {
@@ -13,9 +14,7 @@ export const Welcome = () => {
         <Text style={styles.title}>Shoooes</Text>
         <Text style={styles.text}>Pisa fuerte, elige bien</Text>
       </View>
-      <Pressable onPress={handlePress} style={styles.button}>
-        <Text style={styles.buttonText}>Ingresar</Text>
-      </Pressable>
+      <Button onPress={handlePress}>Ingresar</Button>
     </SafeAreaView>
   )
 }
@@ -40,16 +39,5 @@ const styles = StyleSheet.create({
   text: {
     color: '#6B7280',
     fontSize: 16,
-  },
-  button: {
-    backgroundColor: '#FC3400',
-    borderRadius: 12,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
   },
 })
