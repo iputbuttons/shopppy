@@ -1,4 +1,4 @@
-import { FlatList, StyleSheet, Text } from 'react-native'
+import { FlatList, StyleSheet, Text, View } from 'react-native'
 import products from '../data/products.json'
 import { ProductItem } from '../components/productItem'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -9,12 +9,18 @@ import { ROUTE } from '../navigation/routes'
 
 export const ItemListCategories = () => {
   const { params } = useRoute()
-  const { navigate } = useNavigation()
+  const { navigate, setOptions } = useNavigation()
   const [textToSearch, setTextToSearch] = useState('')
   const [productsFiltered, setProductsFiltered] = useState(products)
 
   const navigateToItemDetails = productId =>
     navigate(ROUTE.ITEM_DETAIL, { productId })
+
+  const capitalizeBrand = brandToCapitalize => {
+    const [firstLetter, ...restLetters] = brandToCapitalize
+    const brand = firstLetter.toUpperCase() + restLetters.join('')
+    return brand
+  }
 
   useEffect(() => {
     const productsFiltered = products.filter(product =>
@@ -23,9 +29,13 @@ export const ItemListCategories = () => {
     setProductsFiltered(productsFiltered)
   }, [textToSearch])
 
+  useEffect(() => {
+    const brand = capitalizeBrand(params.brand)
+    setOptions({ title: brand })
+  }, [params.brand])
+
   return (
-    <SafeAreaView style={styles.itemListCategories}>
-      <Text style={styles.brand}>{params.brand}</Text>
+    <View style={styles.itemListCategories}>
       <SearchInput
         onChangeText={setTextToSearch}
         placeholder='Buscar zapatillas aquí...'
@@ -47,7 +57,7 @@ export const ItemListCategories = () => {
           No se han encontrado zapatillas con la búsqueda "{textToSearch}"
         </Text>
       ) : null}
-    </SafeAreaView>
+    </View>
   )
 }
 
@@ -61,6 +71,7 @@ const styles = StyleSheet.create({
   itemListCategories: {
     gap: 32,
     padding: 16,
+    backgroundColor: 'white',
   },
   list: { gap: 32 },
 })

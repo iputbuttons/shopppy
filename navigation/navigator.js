@@ -17,6 +17,11 @@ export const Navigator = () => (
       <StackScreen
         name={ROUTE.ITEM_LIST_CATEGORIES}
         component={ItemListCategories}
+        options={{
+          headerShadowVisible: false,
+          headerShown: true,
+          headerTitleStyle: { fontFamily: 'Unbounded-Bold' },
+        }}
       />
       <StackScreen name={ROUTE.ITEM_DETAIL} component={ItemDetail} />
     </StackNavigator>
