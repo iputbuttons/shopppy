@@ -1,15 +1,18 @@
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Alert, Image, Pressable, StyleSheet, Text, View } from 'react-native'
 import { Button } from '../components/button'
+import { theme } from '../configs/theme'
+import { useNavigation } from '@react-navigation/native'
+import { ROUTE } from '../navigation/routes'
 
 export const Welcome = () => {
-  const handlePress = () => {
-    Alert.alert('Ingresar')
-  }
+  const { navigate } = useNavigation()
+
+  const handlePress = () => navigate(ROUTE.HOME)
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <Image source={require('../assets/Welcome/icon.png')} />
+      <Image source={require('../assets/welcome/icon.png')} />
       <View style={styles.texts}>
         <Text style={styles.title}>Shoooes</Text>
         <Text style={styles.text}>Pisa fuerte, elige bien</Text>
@@ -22,7 +25,7 @@ export const Welcome = () => {
 const styles = StyleSheet.create({
   safeArea: {
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: theme.colors.white,
     flex: 1,
     gap: 32,
     justifyContent: 'center',
@@ -37,7 +40,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   text: {
-    color: '#6B7280',
+    color: theme.colors.gray[500],
     fontSize: 16,
   },
 })
