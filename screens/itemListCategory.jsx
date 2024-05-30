@@ -1,16 +1,28 @@
-import { FlatList, StyleSheet, Text, View } from 'react-native'
-import products from '../data/products.json'
+import {
+  ActivityIndicator,
+  FlatList,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native'
 import { ProductItem } from '../components/productItem'
-import { SafeAreaView } from 'react-native-safe-area-context'
 import { SearchInput } from '../components/searchInput'
 import { useEffect, useState } from 'react'
-import { useNavigation, useRoute } from '@react-navigation/native'
+import {
+  useFocusEffect,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native'
 import { ROUTE } from '../navigation/routes'
+import { useSelector } from 'react-redux'
+import { useGetProductsByCategoryQuery } from '../services/shopService'
+import { theme } from '../configs/theme'
 
-export const ItemListCategories = () => {
-  const { params } = useRoute()
+export const ItemListCategory = () => {
   const { navigate, setOptions } = useNavigation()
   const [textToSearch, setTextToSearch] = useState('')
+  const category = useSelector(state => state.shop.categorySeleted)
+  const { data: products, isLoading } = useGetProductsByCategoryQuery(category)
   const [productsFiltered, setProductsFiltered] = useState(products)
 
   const navigateToItemDetails = productId =>
@@ -22,22 +34,32 @@ export const ItemListCategories = () => {
     return brand
   }
 
-  useEffect(() => {
+  const handleSearch = textToSearch => {
+    setTextToSearch(textToSearch)
     const productsFiltered = products.filter(product =>
       product.model.toLowerCase().includes(textToSearch.toLowerCase().trim())
     )
     setProductsFiltered(productsFiltered)
-  }, [textToSearch])
+  }
 
-  useEffect(() => {
-    const brand = capitalizeBrand(params.brand)
-    setOptions({ title: brand })
-  }, [params.brand])
+  useEffect(() => setProductsFiltered(products), [products])
 
+  useFocusEffect(() => {
+    setOptions({ title: capitalizeBrand(category) })
+  })
+
+  if (isLoading) {
+    return (
+      <View style={styles.itemListCategories}>
+        <ActivityIndicator size='large' color={theme.colors.primary[600]} />
+        <Text>Cargando productos...</Text>
+      </View>
+    )
+  }
   return (
     <View style={styles.itemListCategories}>
       <SearchInput
-        onChangeText={setTextToSearch}
+        onChangeText={handleSearch}
         placeholder='Buscar zapatillas aquí...'
         value={textToSearch}
       />
@@ -52,7 +74,7 @@ export const ItemListCategories = () => {
           />
         )}
       />
-      {productsFiltered.length === 0 ? (
+      {productsFiltered && productsFiltered.length === 0 ? (
         <Text>
           No se han encontrado zapatillas con la búsqueda "{textToSearch}"
         </Text>

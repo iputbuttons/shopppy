@@ -7,6 +7,7 @@ import {
   useWindowDimensions,
 } from 'react-native'
 import { theme } from '../configs/theme'
+import { formatPrice } from '../utils/price'
 
 export const ProductItem = ({ brand, image, model, onPress, price }) => (
   <Pressable style={styles.productItem} onPress={onPress}>
@@ -14,7 +15,7 @@ export const ProductItem = ({ brand, image, model, onPress, price }) => (
     <View style={styles.info}>
       <Text style={styles.title}>{brand}</Text>
       <Text style={styles.text}>{model}</Text>
-      <Text style={styles.text}>{price}</Text>
+      <Text style={styles.text}>{formatPrice(price)}</Text>
     </View>
   </Pressable>
 )
