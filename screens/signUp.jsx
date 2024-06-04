@@ -19,28 +19,29 @@ export const SignUp = () => {
 
   const handleSignUp = async () => {
     try {
-      const validation = signupSchema.validate({
+      signupSchema.validate({
         email,
         password,
         confirmPassword,
       })
-      triggerSignUp({ email, password })
+      const payload = await triggerSignUp({ email, password })
     } catch (error) {
-      console.log(error)
-      console.log(error.path)
-      console.log(error.message)
-      switch (error.path) {
-        case 'email':
-          setErrorEmail(error.message)
-          break
-        case 'password':
-          setErrorPassword(error.message)
-          break
-        case 'confirmPassword':
-          setErrorConfirmPassword(error.message)
-          break
-        default:
-          break
+      if (error.name === 'ValidationError') {
+        switch (error.path) {
+          case 'email':
+            setErrorEmail(error.message)
+            break
+          case 'password':
+            setErrorPassword(error.message)
+            break
+          case 'confirmPassword':
+            setErrorConfirmPassword(error.message)
+            break
+          default:
+            break
+        }
+      } else {
+        console.error('Error en la solicitud de registro:', error)
       }
     }
   }
