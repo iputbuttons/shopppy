@@ -23,7 +23,6 @@ export const Categories = () => {
     navigate(ROUTE.ITEM_LIST_CATEGORIES, { brand })
   }
 
-  console.log('categories: ', data)
   return (
     <View style={styles.categories}>
       <Text style={styles.text}>Marcas top</Text>

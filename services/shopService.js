@@ -2,8 +2,6 @@ import { baseUrl } from '../firebase/database'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { objectToArray } from '../utils/array'
 
-// TODO: Agregar endpoint getProductById
-
 export const shopApi = createApi({
   reducerPath: 'shopApi',
   baseQuery: fetchBaseQuery({ baseUrl }),
@@ -22,6 +20,23 @@ export const shopApi = createApi({
         body: order,
       }),
     }),
+    getProfileImage: builder.query({
+      query: localId => `profileImages/${localId}.json`,
+    }),
+    postProfileImage: builder.mutation({
+      query: ({ image, localId }) => ({
+        url: `profileImages/${localId}.json`,
+        method: 'PUT',
+        body: { image },
+      }),
+    }),
+    postUserLocation: builder.mutation({
+      query: ({ location, localId }) => ({
+        url: `locations/${localId}.json`,
+        method: 'PUT',
+        body: { ...location },
+      }),
+    }),
   }),
 })
 
@@ -29,4 +44,7 @@ export const {
   useGetProductsByCategoryQuery,
   useGetCategoriesQuery,
   usePostOrderMutation,
+  useGetProfileImageQuery,
+  usePostProfileImageMutation,
+  usePostUserLocationMutation,
 } = shopApi

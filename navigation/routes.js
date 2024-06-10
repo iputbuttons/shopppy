@@ -7,4 +7,8 @@ export const ROUTE = {
   ORDERS: 'Orders',
   LOGIN: 'Login',
   SIGN_UP: 'SignUp',
+  MY_PROFILE: 'MyProfile',
+  IMAGE_SELECTOR: 'ImageSelector',
+  LOCATION_SELECTOR: 'LocationSelector',
+  MY_LOCATION: 'MyLocation',
 }
