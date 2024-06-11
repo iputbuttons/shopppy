@@ -4,12 +4,21 @@ import { AuthStack } from './authStack'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { useGetProfileImageQuery } from '../services/shopService'
-import { setProfilePicture } from '../features/auth/authSlice'
+import { setProfilePicture, setUser } from '../features/auth/authSlice'
+import { fetchSession } from '../db'
 
 export const MainNavigator = () => {
   const { localId } = useSelector(state => state.auth.value.user)
   const { data } = useGetProfileImageQuery(localId)
   const dispatch = useDispatch()
+
+  useEffect(() => {
+    const getSession = async () => {
+      const session = await fetchSession()
+      if (session) dispatch(setUser(session))
+    }
+    getSession()
+  }, [])
 
   useEffect(() => {
     if (data) {
@@ -19,8 +28,7 @@ export const MainNavigator = () => {
 
   return (
     <NavigationContainer>
-      {/* {user ? <TabNavigator /> : <AuthStack />} */}
-      <TabNavigator />
+      {localId ? <TabNavigator /> : <AuthStack />}
     </NavigationContainer>
   )
 }

@@ -8,6 +8,7 @@ import { theme } from '../configs/theme'
 export const MyProfile = () => {
   const { navigate } = useNavigation()
   const imageCamera = useSelector(state => state.auth.value.imageCamera)
+  const email = useSelector(state => state.auth.value.user.email)
 
   const goToImageSelector = () => navigate(ROUTE.IMAGE_SELECTOR)
 
@@ -15,6 +16,7 @@ export const MyProfile = () => {
 
   return (
     <View style={styles.myProfile}>
+      <Text>{email}</Text>
       <Image
         source={
           imageCamera || require('../assets/myProfile/profile_placeholder.png')

@@ -4,6 +4,7 @@ import { Home } from '../screens/home'
 import { ItemListCategory } from '../screens/itemListCategory'
 import { ItemDetail } from '../screens/itemDetail'
 import { ROUTE } from './routes'
+import { Logout } from '../icons/logout'
 
 const { Navigator: StackNavigator, Screen: StackScreen } =
   createNativeStackNavigator()
@@ -13,9 +14,9 @@ export const ShopStack = () => (
     screenOptions={{
       headerTitleStyle: { fontFamily: 'Unbounded-Bold' },
       headerShadowVisible: false,
+      headerRight: () => <Logout />,
     }}
   >
-    <StackScreen name={ROUTE.WELCOME} component={Welcome} />
     <StackScreen
       name={ROUTE.HOME}
       component={Home}
