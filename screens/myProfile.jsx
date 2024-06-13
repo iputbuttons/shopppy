@@ -7,8 +7,7 @@ import { theme } from '../configs/theme'
 
 export const MyProfile = () => {
   const { navigate } = useNavigation()
-  const imageCamera = useSelector(state => state.auth.value.imageCamera)
-  const email = useSelector(state => state.auth.value.user.email)
+  const { email, photo } = useSelector(state => state.auth.value.user)
 
   const goToImageSelector = () => navigate(ROUTE.IMAGE_SELECTOR)
 
@@ -19,7 +18,9 @@ export const MyProfile = () => {
       <Text>{email}</Text>
       <Image
         source={
-          imageCamera || require('../assets/myProfile/profile_placeholder.png')
+          photo
+            ? { uri: photo }
+            : require('../assets/myProfile/profile_placeholder.png')
         }
         resizeMode='cover'
         style={styles.image}
@@ -41,6 +42,6 @@ const styles = StyleSheet.create({
   image: {
     width: 160,
     height: 160,
-    borderRadius: 50,
+    borderRadius: 80,
   },
 })

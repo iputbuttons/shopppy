@@ -51,7 +51,6 @@ export const SignUp = () => {
   return (
     <View style={styles.signUp}>
       <View style={styles.section}>
-        <Text style={styles.title}>Crear cuenta</Text>
         <Input
           error={errorEmail}
           label='Correo electronico'
@@ -98,9 +97,5 @@ const styles = StyleSheet.create({
   section: {
     width: '100%',
     gap: 16,
-  },
-  title: {
-    fontFamily: 'Unbounded-Bold',
-    fontSize: 24,
   },
 })

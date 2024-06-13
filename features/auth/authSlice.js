@@ -7,10 +7,10 @@ export const authSlice = createSlice({
       user: {
         email: null,
         localId: null,
+        photo: null,
       },
       token: null,
       imageCamera: null,
-      profilePicture: null,
       location: {
         address: '',
         latitude: 0,
@@ -27,8 +27,8 @@ export const authSlice = createSlice({
     setCameraImage: (state, action) => {
       state.value.imageCamera = action.payload
     },
-    setProfilePicture: (state, action) => {
-      state.value.profilePicture = action.payload
+    setUserPhoto: (state, action) => {
+      state.value.user.photo = action.payload
     },
     setUserLocation: (state, action) => {
       state.value.location = action.payload
@@ -41,7 +41,7 @@ export const authSlice = createSlice({
         },
         token: null,
         imageCamera: null,
-        profilePicture: null,
+        photo: null,
         location: {
           address: '',
           latitude: 0,
@@ -55,7 +55,7 @@ export const authSlice = createSlice({
 export const {
   setUser,
   setCameraImage,
-  setProfilePicture,
+  setUserPhoto,
   setUserLocation,
   logout,
 } = authSlice.actions

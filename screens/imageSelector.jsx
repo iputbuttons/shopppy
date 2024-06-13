@@ -2,7 +2,7 @@ import * as ImagePicker from 'expo-image-picker'
 import { useState } from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
 import { Button } from '../components/button'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setCameraImage } from '../features/auth/authSlice'
 import { useNavigation } from '@react-navigation/native'
 import { usePostProfileImageMutation } from '../services/shopService'
@@ -11,7 +11,7 @@ export const ImageSelector = () => {
   const [image, setImage] = useState(null)
   const { goBack } = useNavigation()
   const dispatch = useDispatch()
-  const localId = 'qdoqwdoioim'
+  const localId = useSelector(state => state.auth.value.user.localId)
   const [triggerSaveProfileImage] = usePostProfileImageMutation()
   const [isSavingProfileImage, setIsSavingProfileImage] = useState(false)
 

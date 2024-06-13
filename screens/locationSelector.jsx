@@ -6,7 +6,7 @@ import { MapPreview } from '../components/mapPreview'
 import { googleAPI } from '../configs/googleAPI'
 import { usePostUserLocationMutation } from '../services/shopService'
 import { Button } from '../components/button'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setUserLocation } from '../features/auth/authSlice'
 import { useNavigation } from '@react-navigation/native'
 
@@ -16,7 +16,7 @@ export const LocationSelector = () => {
   const [error, setError] = useState('')
   const hasLocation = location.latitude && location.longitude
   const [triggerPostUserLocation] = usePostUserLocationMutation()
-  const localId = 'qdoqwdoioim'
+  const localId = useSelector(state => state.auth.value.user.localId)
   const dispatch = useDispatch()
   const { goBack } = useNavigation()
   const [isSavingLocation, setIsSavingLocation] = useState(false)

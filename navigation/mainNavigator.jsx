@@ -3,13 +3,22 @@ import { TabNavigator } from './tabNavigator'
 import { AuthStack } from './authStack'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
-import { useGetProfileImageQuery } from '../services/shopService'
-import { setProfilePicture, setUser } from '../features/auth/authSlice'
+import {
+  useGetUserLocationQuery,
+  useGetProfileImageQuery,
+} from '../services/shopService'
+import {
+  setUserPhoto,
+  setUser,
+  setUserLocation,
+} from '../features/auth/authSlice'
 import { fetchSession } from '../db'
 
 export const MainNavigator = () => {
   const { localId } = useSelector(state => state.auth.value.user)
-  const { data } = useGetProfileImageQuery(localId)
+  const { data: profileImage } = useGetProfileImageQuery(localId)
+  const { data: userLocation } = useGetUserLocationQuery(localId)
+
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -21,10 +30,16 @@ export const MainNavigator = () => {
   }, [])
 
   useEffect(() => {
-    if (data) {
-      dispatch(setProfilePicture(data.image))
+    if (profileImage) {
+      dispatch(setUserPhoto(profileImage.image))
     }
-  }, [data])
+  }, [profileImage])
+
+  useEffect(() => {
+    if (userLocation) {
+      dispatch(setUserLocation(userLocation))
+    }
+  }, [userLocation])
 
   return (
     <NavigationContainer>

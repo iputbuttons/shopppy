@@ -34,6 +34,8 @@ export const Login = () => {
   useEffect(() => {
     if (result.data) {
       const { email, localId, idToken: token } = result.data
+      console.log('token =>', token)
+
       dispatch(setUser({ email, localId, token }))
       insertSession({ email, localId, token })
     }
@@ -42,7 +44,6 @@ export const Login = () => {
   return (
     <View style={styles.login}>
       <View style={styles.section}>
-        <Text style={styles.title}>Bienvenido a Shoooes</Text>
         <Input
           label='Correo electronico'
           placeholder='francisco@shoooes.com'
@@ -81,9 +82,5 @@ const styles = StyleSheet.create({
   section: {
     width: '100%',
     gap: 16,
-  },
-  title: {
-    fontFamily: 'Unbounded-Bold',
-    fontSize: 24,
   },
 })
